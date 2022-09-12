@@ -1,22 +1,101 @@
-const createBtn = document.querySelector('.create-btn');
-const notesList = document.querySelector('.notes-list');
+let form = document.getElementById("form");
+let textInput = document.getElementById("textInput");
+let dateInput = document.getElementById("dateInput");
+let textarea = document.getElementById("textarea");
+let msg = document.getElementById("msg");
+let notesList = document.querySelector(".notes-list");
+let add = document.getElementById("add");
 
-createBtn.addEventListener('click', createListItem);
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  formValidation();
+});
 
-function createListItem() {
-    console.log('click');
-    notesList.innerHTML += `
-        <li class="list-item">
-            <input class="input name-input" type="text" placeholder="Name" value="">
-            <input class="input created-input" type="text" placeholder="Created" value="">
-            <input class="input category-input" type="text" placeholder="Category" value="">
-            <input class="input content-input" type="text" placeholder="Content" value="">
-            <input class="input dates-input" type="text" placeholder="Dates" value="">
+let formValidation = () => {
+  if (textInput.value === "") {
+    console.log("failure");
+    msg.innerHTML = "Task cannot be blank";
+  } else {
+    console.log("success");
+    msg.innerHTML = "";
+    acceptData();
+    add.setAttribute("data-bs-dismiss", "modal");
+    add.click();
+
+    (() => {
+      add.setAttribute("data-bs-dismiss", "");
+    })();
+  }
+};
+
+let data = [{}];
+
+let acceptData = () => {
+  data.push({
+    text: textInput.value,
+    date: dateInput.value,
+    description: textarea.value,
+  });
+
+  localStorage.setItem("data", JSON.stringify(data));
+
+  console.log(data);
+  createTasks();
+};
+
+let createTasks = () => {
+    notesList.innerHTML = "";
+    data.map((x, y) => {
+        let utc = new Date().toJSON().slice(0,10);
+        if (!x.date) {
+            utc = utc;
+        } else {
+            utc = x.date;
+        };
+        return (notesList.innerHTML += `
+        <li id=${y} class="list-item">
+            <span class="fw-bold">${x.text}</span>
+            <span class="small text-secondary">${utc}</span>
+            <span class="fw-bold">Category</span>
+            <span class="small text-secondary">${x.description}</span>
+            <span class="small text-secondary">${x.date}</span>
+  
             <span class="options">
-                <i class="fas fa-edit"></i>
-                <i class="fas fa-trash-alt"></i>
+                <i onClick= "editTask(this)" data-bs-toggle="modal" data-bs-target="#form" class="fas fa-edit"></i>
+                <i onClick ="deleteTask(this);createTasks()" class="fas fa-trash-alt"></i>
             </span>
         </li>
-    `;
-    notesList.value = "";
+        `
+        );
+    });
+
+  resetForm();
 };
+
+let deleteTask = (e) => {
+  e.parentElement.parentElement.remove();
+  data.splice(e.parentElement.parentElement.id, 1);
+  localStorage.setItem("data", JSON.stringify(data));
+  console.log(data);
+};
+
+let editTask = (e) => {
+  let selectedTask = e.parentElement.parentElement;
+
+  textInput.value = selectedTask.children[0].innerHTML;
+  dateInput.value = selectedTask.children[1].innerHTML;
+  textarea.value = selectedTask.children[2].innerHTML;
+  deleteTask(e);
+};
+
+let resetForm = () => {
+  textInput.value = "";
+  dateInput.value = "";
+  textarea.value = "";
+};
+
+(() => {
+  data = JSON.parse(localStorage.getItem("data")) || []
+  console.log(data);
+  createTasks();
+})();
