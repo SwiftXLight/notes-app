@@ -47,11 +47,11 @@ let createTasks = () => {
     notesList.innerHTML = "";
     data.map((x, y) => {
         let utc = new Date().toJSON().slice(0,10);
-        if (!x.date) {
-            utc = utc;
-        } else {
-            utc = x.date;
-        };
+        let reg = /(\d{1,4}([.\-/])\d{1,2}([.\-/])\d{1,4})/g;
+        if (x.description.match(reg)) {
+            console.log(x.description.match(reg));
+            x.date = x.description.match(reg);
+        }
         return (notesList.innerHTML += `
         <li id=${y} class="list-item">
             <span class="fw-bold">${x.text}</span>
