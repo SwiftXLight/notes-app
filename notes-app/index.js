@@ -5,6 +5,9 @@ let textarea = document.getElementById("textarea");
 let msg = document.getElementById("msg");
 let notesList = document.querySelector(".notes-list");
 let add = document.getElementById("add");
+let taskActive = document.querySelector("#task-active");
+let ideaActive = document.querySelector("#idea-active");
+let randomThoughtActive = document.querySelector("#random-thought-active");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -69,14 +72,15 @@ let createTasks = () => {
         `
         );
     });
-
-  resetForm();
+    countCategory();
+    resetForm();
 };
 
 let deleteTask = (e) => {
   e.parentElement.parentElement.remove();
   data.splice(e.parentElement.parentElement.id, 1);
   localStorage.setItem("data", JSON.stringify(data));
+  countCategory();
   console.log(data);
 };
 
@@ -102,3 +106,22 @@ let resetForm = () => {
   console.log(data);
   createTasks();
 })();
+
+function countCategory () {
+    let idea = 0;
+    let task = 0;
+    let randomThought = 0;
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].category === "Idea") {
+            idea++;
+        } else if (data[i].category === "Random Thought") {
+            randomThought++;
+        } else if (data[i].category === "Task") {
+            task++;
+        }
+    }
+    taskActive.innerHTML = task;
+    ideaActive.innerHTML = idea;
+    randomThoughtActive.innerHTML = randomThought;
+    console.log(idea, task, randomThought);
+};
