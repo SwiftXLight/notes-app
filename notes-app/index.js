@@ -35,6 +35,7 @@ let acceptData = () => {
     text: textInput.value,
     date: dateInput.value,
     description: textarea.value,
+    category: category.value
   });
 
   localStorage.setItem("data", JSON.stringify(data));
@@ -56,7 +57,7 @@ let createTasks = () => {
         <li id=${y} class="list-item">
             <span class="fw-bold">${x.text}</span>
             <span class="small text-secondary">${utc}</span>
-            <span class="fw-bold">Category</span>
+            <span class="fw-bold">${x.category}</span>
             <span class="small text-secondary">${x.description}</span>
             <span class="small text-secondary">${x.date}</span>
   
@@ -85,6 +86,7 @@ let editTask = (e) => {
   textInput.value = selectedTask.children[0].innerHTML;
   dateInput.value = selectedTask.children[1].innerHTML;
   textarea.value = selectedTask.children[2].innerHTML;
+  category.value = selectedTask.children[3].innerHTML;
   deleteTask(e);
 };
 
@@ -92,6 +94,7 @@ let resetForm = () => {
   textInput.value = "";
   dateInput.value = "";
   textarea.value = "";
+  category.value = "";
 };
 
 (() => {
