@@ -23,7 +23,8 @@
 }
 
 .notes-list,
-.summary-list {
+.summary-list,
+.archived-list {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -44,8 +45,10 @@
     gap: 5px;
 }
 
-#addNew {
+#addNew,
+.toggle-notes {
     align-self: flex-end;
+    margin: 10px;
 }
 
 .summary-titles,
@@ -59,4 +62,8 @@
 
 #msg {
     color: red;
+}
+
+.hidden {
+    background-color: aquamarine;
 }

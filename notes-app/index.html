@@ -29,7 +29,7 @@
             <p>Content</p>
             <p>Dates</p>
             <p> <span class="options">
-                <i class="fas fa-edit"></i>
+                <i>arc</i>
                 <i class="fas fa-trash-alt"></i>
               </span>
             </p>
@@ -37,6 +37,10 @@
         <ul class="notes-list"></ul>
         <button id="addNew" data-bs-toggle="modal" data-bs-target="#form">
             Create Note
+        </button>
+
+        <button class="toggle-notes">
+            Active / Archive
         </button>
 
         <div class="summary-titles">
@@ -48,19 +52,24 @@
             <li class="summary-item">
                 <p>Task</p>
                 <p id="task-active"></p>
-                <p>q</p>
+                <p id="task-archive"></p>
             </li>
             <li class="summary-item">
                 <p>Random Thought</p>
                 <p id="random-thought-active"></p>
-                <p>q</p>
+                <p id="random-thought-archive"></p>
             </li>
             <li class="summary-item">
                 <p>Idea</p>
                 <p id="idea-active"></p>
-                <p>q</p>
+                <p id="idea-archive"></p>
             </li>
         </ul>
+
+        <div class="archived-notes">
+            <p>Archived Notes</p>
+        </div>
+        <ul class="archived-list"></ul>
 
     <!-- Modal -->
     <form class="modal fade" id="form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
