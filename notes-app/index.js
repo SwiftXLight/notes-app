@@ -20,10 +20,8 @@ form.addEventListener("submit", (e) => {
 
 let formValidation = () => {
   if (textInput.value === "") {
-    console.log("failure");
     msg.innerHTML = "Task cannot be blank";
   } else {
-    console.log("success");
     msg.innerHTML = "";
     acceptData();
     add.setAttribute("data-bs-dismiss", "modal");
@@ -47,8 +45,6 @@ let acceptData = () => {
   });
 
   localStorage.setItem("data", JSON.stringify(data));
-
-  console.log(data);
   createTasks();
 };
 
@@ -94,7 +90,6 @@ let deleteTask = (e) => {
   data.splice(e.parentElement.parentElement.id, 1);
   localStorage.setItem("data", JSON.stringify(data));
   countCategory();
-  console.log(data);
 };
 
 let editTask = (e) => {
@@ -176,10 +171,8 @@ function toggleNotesDisplay() {
   for (let i = 0; i < data.length; i++) {
     if (data[i].isArchived) {
       notesList.children[i].classList.toggle("toggle-arc");
-      console.log("Show archived items");
     } else if (!data[i].isArchived) {
       notesList.children[i].classList.toggle("toggle-arc");
-      console.log("Show active items");
     }
   }
 };
