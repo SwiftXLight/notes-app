@@ -1,17 +1,23 @@
-let form = document.getElementById("form");
-let textInput = document.getElementById("textInput");
-let dateInput = document.getElementById("dateInput");
-let textarea = document.getElementById("textarea");
-let msg = document.getElementById("msg");
+//pop-up form
+let form = document.querySelector("#form");
+let msg = document.querySelector("#msg");
+
+//main list
 let notesList = document.querySelector(".notes-list");
-let add = document.getElementById("add");
+
+//add note button
+let addNote = document.querySelector("#add");
+
+//toggle button for show active/archive notes
+let toggleNotes = document.querySelector(".toggle-notes");
+
+//active and archive counters
 let taskActive = document.querySelector("#task-active");
 let taskArchived = document.querySelector("#task-archive");
 let ideaActive = document.querySelector("#idea-active");
 let ideaArchived = document.querySelector("#idea-archive");
 let randomThoughtActive = document.querySelector("#random-thought-active");
 let randomThoughtArchived = document.querySelector("#random-thought-archive");
-let toggleNotes = document.querySelector(".toggle-notes");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -24,11 +30,11 @@ let formValidation = () => {
   } else {
     msg.innerHTML = "";
     acceptData();
-    add.setAttribute("data-bs-dismiss", "modal");
-    add.click();
+    addNote.setAttribute("data-bs-dismiss", "modal");
+    addNote.click();
 
     (() => {
-      add.setAttribute("data-bs-dismiss", "");
+      addNote.setAttribute("data-bs-dismiss", "");
     })();
   }
 };
@@ -36,52 +42,56 @@ let formValidation = () => {
 let data = [{}];
 
 let acceptData = () => {
-  data.push({
+  let newItem = {
     text: textInput.value,
     date: dateInput.value,
     description: textarea.value,
     category: category.value,
     isArchived: false
-  });
+  };
+  data.push(newItem);
+  console.log(data);
 
   localStorage.setItem("data", JSON.stringify(data));
   createTasks();
 };
 
 let createTasks = () => {
-    notesList.innerHTML = "";
-    data.map((x, y) => {
-      let checkArc = () => {
-        if (data[y].isArchived) {
-          return "toggle-arc";
-        } else {
-          return "";
-        }
-      };
-      let utc = new Date().toJSON().slice(0,10);
-      let reg = /(\d{1,4}([.\-/])\d{1,2}([.\-/])\d{1,4})/g;
-      if (x.description.match(reg)) {
-        x.date = x.description.match(reg);
+  notesList.innerHTML = "";
+  data.map((x, y) => {
+    let checkArc = () => {
+      if (data[y].isArchived) {
+        return "toggle-arc";
+      } else {
+        return "";
       }
-      return (notesList.innerHTML += `
-        <li id=${y} class="list-item ${checkArc()}">
-          <span class="fw-bold">${x.text}</span>
-          <span class="small text-secondary">${utc}</span>
-          <span class="fw-bold">${x.category}</span>
-          <span class="small text-secondary">${x.description}</span>
-          <span class="small text-secondary">${x.date}</span>
+    };
+
+    let utc = new Date().toJSON().slice(0,10);
+    let reg = /(\d{1,4}([.\-/])\d{1,2}([.\-/])\d{1,4})/g;
+    if (x.description.match(reg)) {
+      x.date = x.description.match(reg);
+    }
+
+    return (notesList.innerHTML += `
+      <li id=${y} class="list-item ${checkArc()}">
+        <span class="fw-bold">${x.text}</span>
+        <span class="small text-secondary">${utc}</span>
+        <span class="fw-bold">${x.category}</span>
+        <span class="small text-secondary">${x.description}</span>
+        <span class="small text-secondary">${x.date}</span>
   
-          <span class="options">
-            <i onClick="archiveTask(this)" class="fa-solid fa-box-archive"></i>
-            <i onClick="editTask(this)" data-bs-toggle="modal" data-bs-target="#form" class="fas fa-edit"></i>
-            <i onClick="deleteTask(this); createTasks()" class="fas fa-trash-alt"></i>
-          </span>
-        </li>
-      `
-      );
-    });
-    countCategory();
-    resetForm();
+        <span class="options">
+          <i onClick="archiveTask(this)" class="fa-solid fa-box-archive"></i>
+          <i onClick="editTask(this)" data-bs-toggle="modal" data-bs-target="#form" class="fas fa-edit"></i>
+          <i onClick="deleteTask(this); createTasks()" class="fas fa-trash-alt"></i>
+        </span>
+      </li>
+    `
+    );
+  });
+  countCategory();
+  resetForm();
 };
 
 let deleteTask = (e) => {
@@ -117,47 +127,48 @@ let resetForm = () => {
 })();
 
 function countCategory () {
-    let idea = 0;
-    let ideaArc = 0;
-    let task = 0;
-    let taskArc = 0;
-    let randomThought = 0;
-    let randomThoughtArc = 0;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].category === "Idea" && !data[i].isArchived) {
-        idea++;
-      } 
-      else if (data[i].category === "Idea" && data[i].isArchived) {
-        ideaArc++;
-      }
-      else if (data[i].category === "Random Thought" && !data[i].isArchived) {
-        randomThought++;
-      }  
-      else if (data[i].category === "Random Thought" && data[i].isArchived) {
-        randomThoughtArc++;
-      }
-      else if (data[i].category === "Task" && !data[i].isArchived) {
-        task++;
-      } 
-      else if (data[i].category === "Task" && data[i].isArchived) {
-        taskArc++;
-      }
+  let idea = 0;
+  let ideaArc = 0;
+  let task = 0;
+  let taskArc = 0;
+  let randomThought = 0;
+  let randomThoughtArc = 0;
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].category === "Idea" && !data[i].isArchived) {
+      idea++;
+    } 
+    else if (data[i].category === "Idea" && data[i].isArchived) {
+      ideaArc++;
     }
-    taskActive.innerHTML = task;
-    taskArchived.innerHTML = taskArc;
-    ideaActive.innerHTML = idea;
-    ideaArchived.innerHTML = ideaArc;
-    randomThoughtActive.innerHTML = randomThought;
-    randomThoughtArchived.innerHTML = randomThoughtArc;
+    else if (data[i].category === "Random Thought" && !data[i].isArchived) {
+      randomThought++;
+    }  
+    else if (data[i].category === "Random Thought" && data[i].isArchived) {
+      randomThoughtArc++;
+    }
+    else if (data[i].category === "Task" && !data[i].isArchived) {
+      task++;
+     } 
+    else if (data[i].category === "Task" && data[i].isArchived) {
+      taskArc++;
+    }
+  }
+
+  taskActive.innerHTML = task;
+  taskArchived.innerHTML = taskArc;
+  ideaActive.innerHTML = idea;
+  ideaArchived.innerHTML = ideaArc;
+  randomThoughtActive.innerHTML = randomThought;
+  randomThoughtArchived.innerHTML = randomThoughtArc;
 };
 
 let archiveTask = (e) => {
   let element = e.parentElement.parentElement;
   if (data[element.id].isArchived === true) {
     data[element.id].isArchived = false;
-  } else if (data[element.id].isArchived === false) {
+  } 
+  else if (data[element.id].isArchived === false) {
     data[element.id].isArchived = true;
-    
   }
   element.classList.toggle("toggle-arc");
 
