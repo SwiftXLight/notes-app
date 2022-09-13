@@ -164,12 +164,9 @@ function countCategory () {
 
 let archiveTask = (e) => {
   let element = e.parentElement.parentElement;
-  if (data[element.id].isArchived === true) {
-    data[element.id].isArchived = false;
+  if (data[element.id].isArchived !== null) {
+    data[element.id] = {...data[element.id], isArchived: !data[element.id].isArchived};
   } 
-  else if (data[element.id].isArchived === false) {
-    data[element.id].isArchived = true;
-  }
   element.classList.toggle("toggle-arc");
 
   localStorage.setItem("data", JSON.stringify(data));
