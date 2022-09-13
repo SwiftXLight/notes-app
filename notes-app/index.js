@@ -155,11 +155,11 @@ let archiveTask = (e) => {
   let element = e.parentElement.parentElement;
   if (data[element.id].isArchived === true) {
     data[element.id].isArchived = false;
-    element.classList.remove("toggle-arc");
   } else if (data[element.id].isArchived === false) {
     data[element.id].isArchived = true;
-    element.classList.add("toggle-arc");
+    
   }
+  element.classList.toggle("toggle-arc");
 
   localStorage.setItem("data", JSON.stringify(data));
   countCategory();
