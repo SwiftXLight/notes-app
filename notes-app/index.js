@@ -11,7 +11,6 @@ let ideaActive = document.querySelector("#idea-active");
 let ideaArchived = document.querySelector("#idea-archive");
 let randomThoughtActive = document.querySelector("#random-thought-active");
 let randomThoughtArchived = document.querySelector("#random-thought-archive");
-let archivedList = document.querySelector(".archived-list");
 let toggleNotes = document.querySelector(".toggle-notes");
 
 form.addEventListener("submit", (e) => {
@@ -58,7 +57,9 @@ let createTasks = () => {
     data.map((x, y) => {
       let checkArc = () => {
         if (data[y].isArchived) {
-          return "hidden";
+          return "toggle-arc";
+        } else {
+          return "";
         }
       };
       let utc = new Date().toJSON().slice(0,10);
@@ -159,10 +160,10 @@ let archiveTask = (e) => {
   let element = e.parentElement.parentElement;
   if (data[element.id].isArchived === true) {
     data[element.id].isArchived = false;
-    element.classList.remove("hidden");
+    element.classList.remove("toggle-arc");
   } else if (data[element.id].isArchived === false) {
     data[element.id].isArchived = true;
-    element.classList.add("hidden");
+    element.classList.add("toggle-arc");
   }
 
   localStorage.setItem("data", JSON.stringify(data));
@@ -173,11 +174,12 @@ toggleNotes.addEventListener("click", toggleNotesDisplay);
 
 function toggleNotesDisplay() {
   for (let i = 0; i < data.length; i++) {
-    console.log(data[i].isArchived);
     if (data[i].isArchived) {
-      console.log(data[i]);
+      notesList.children[i].classList.toggle("toggle-arc");
+      console.log("Show archived items");
     } else if (!data[i].isArchived) {
-      console.log(data[i]);
+      notesList.children[i].classList.toggle("toggle-arc");
+      console.log("Show active items");
     }
   }
 };
