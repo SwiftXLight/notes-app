@@ -61,7 +61,6 @@ let createTasks = () => {
       let utc = new Date().toJSON().slice(0,10);
       let reg = /(\d{1,4}([.\-/])\d{1,2}([.\-/])\d{1,4})/g;
       if (x.description.match(reg)) {
-        console.log(x.description.match(reg));
         x.date = x.description.match(reg);
       }
       return (notesList.innerHTML += `
@@ -73,7 +72,7 @@ let createTasks = () => {
           <span class="small text-secondary">${x.date}</span>
   
           <span class="options">
-            <i onClick="archiveTask(this)">arc</i>
+            <i onClick="archiveTask(this)" class="fa-solid fa-box-archive"></i>
             <i onClick="editTask(this)" data-bs-toggle="modal" data-bs-target="#form" class="fas fa-edit"></i>
             <i onClick="deleteTask(this); createTasks()" class="fas fa-trash-alt"></i>
           </span>
@@ -90,6 +89,7 @@ let deleteTask = (e) => {
   data.splice(e.parentElement.parentElement.id, 1);
   localStorage.setItem("data", JSON.stringify(data));
   countCategory();
+  console.log(data);
 };
 
 let editTask = (e) => {
