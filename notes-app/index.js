@@ -1,3 +1,6 @@
+import {someVar} from "./src/someVar.js";
+console.log(someVar);
+
 //pop-up form
 let form = document.querySelector("#form");
 let msg = document.querySelector("#msg");
@@ -59,6 +62,7 @@ let acceptData = () => {
 let createTasks = () => {
   notesList.innerHTML = "";
   data.map((x, y) => {
+    console.log(x)
     let checkArc = () => {
       if (data[y].isArchived) {
         return "toggle-arc";
@@ -73,22 +77,59 @@ let createTasks = () => {
       x.date = x.description.match(reg);
     }
 
-    return (notesList.innerHTML += `
-      <li id=${y} class="list-item ${checkArc()}">
-        <span class="fw-bold">${x.text}</span>
-        <span class="small text-secondary">${utc}</span>
-        <span class="fw-bold">${x.category}</span>
-        <span class="small text-secondary">${x.description}</span>
-        <span class="small text-secondary">${x.date}</span>
-  
-        <span class="options">
-          <i onClick="archiveTask(this)" class="fa-solid fa-box-archive"></i>
-          <i onClick="editTask(this)" data-bs-toggle="modal" data-bs-target="#form" class="fas fa-edit"></i>
-          <i onClick="deleteTask(this); createTasks()" class="fas fa-trash-alt"></i>
-        </span>
-      </li>
-    `
-    );
+    let newLi = document.createElement("li");
+    newLi.setAttribute("class", `list-item ${checkArc()}`);
+    newLi.setAttribute("id", y);
+
+    let spanText = document.createElement("span");
+    spanText.setAttribute("class", "fw-bold");
+    spanText.innerHTML = x.text;
+    console.log(spanText)
+    newLi.appendChild(spanText);
+
+    let spanUtc = document.createElement("span");
+    spanUtc.setAttribute("class", "small text-secondary");
+    spanUtc.innerHTML = utc;
+    newLi.appendChild(spanUtc);
+
+    let spanCategory = document.createElement("span");
+    spanCategory.setAttribute("class", "fw-bold");
+    spanCategory.innerHTML = x.category;
+    newLi.appendChild(spanCategory);
+
+    let spanDescription = document.createElement("span");
+    spanDescription.setAttribute("class", "small text-secondary");
+    spanDescription.innerHTML = x.description;
+    newLi.appendChild(spanDescription);
+
+    let spanDate = document.createElement("span");
+    spanDate.setAttribute("class", "small text-secondary");
+    spanDate.innerHTML = x.date;
+    newLi.appendChild(spanDate);
+
+    let spanOptions = document.createElement("span");
+    spanOptions.setAttribute("class", "options");
+
+    let archiveBtn = document.createElement("i");
+    archiveBtn.setAttribute("class", "fa-solid fa-box-archive");
+    archiveBtn.onclick = () => archiveTask(archiveBtn);
+    spanOptions.appendChild(archiveBtn);
+
+    let editBtn = document.createElement("i");
+    editBtn.setAttribute("class", "fas fa-edit");
+    editBtn.setAttribute("data-bs-toggle", "modal");
+    editBtn.setAttribute("data-bs-target", "#form");
+    editBtn.onclick = ()=> editTask(editBtn)
+    spanOptions.appendChild(editBtn);
+
+    let deleteBtn = document.createElement("i");
+    deleteBtn.setAttribute("class", "fas fa-trash-alt");
+    deleteBtn.onclick = ()=> deleteTask(deleteBtn)
+    spanOptions.appendChild(deleteBtn);
+
+    newLi.appendChild(spanOptions);
+    console.log(newLi);
+    notesList.appendChild(newLi);
   });
   countCategory();
   resetForm();
@@ -96,7 +137,7 @@ let createTasks = () => {
 
 let deleteTask = (e) => {
   e.parentElement.parentElement.remove();
-  data.splice(e.parentElement.parentElement.id, 1);
+  data.splice(e.parentElement.id, 1);
   localStorage.setItem("data", JSON.stringify(data));
   countCategory();
   console.log(data);
