@@ -1,0 +1,81 @@
+.handler {
+    display: flex;
+    flex-direction: column;
+    max-width: 80vw;
+    margin: auto;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.notes-titles,
+.summary-titles,
+.list-item,
+.summary-item {
+    padding: 2vh 2vw;
+    border-radius: 5px;
+}
+
+.notes-titles,
+.summary-titles {
+    background-color: gray;
+    color: white;
+    margin: 20px 0 5px 0;
+}
+
+.notes-list,
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 0;
+}
+
+.list-item,
+.summary-item {
+    background-color: rgb(219, 226, 228);
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.options:hover {
+    cursor: pointer;
+}
+
+.options:nth-child(1):hover {
+    cursor: auto;
+}
+
+.notes-titles,
+.list-item,
+.summary-titles,
+.summary-item {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.summary-titles,
+.summary-item {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.toggle-arc {
+    display: none;
+}
+
+#addNew,
+.toggle-notes {
+    align-self: flex-end;
+    margin: 10px;
+}
+
+#msg {
+    color: red;
+}

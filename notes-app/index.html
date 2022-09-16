@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+        crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"
+    ></script>
+    <script src="https://kit.fontawesome.com/2f21ba502d.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body class="body">
+    <div class="handler">
+        <div class="notes-titles">
+            <p>Name</p>
+            <p>Created</p>
+            <p>Category</p>
+            <p>Content</p>
+            <p>Dates</p>
+            <p> <span class="options">
+                <i class="fa-solid fa-box-archive"></i>
+                <i class="fas fa-trash-alt"></i>
+              </span>
+            </p>
+        </div>
+        <ul class="notes-list"></ul>
+        <button id="addNew" data-bs-toggle="modal" data-bs-target="#form">
+            Create Note
+        </button>
+
+        <button class="toggle-notes">
+            Active / Archive
+        </button>
+
+        <div class="summary-titles">
+            <p>Note Category</p>
+            <p>Active</p>
+            <p>Archived</p>
+        </div>
+        <ul class="summary-list">
+            <li class="summary-item">
+                <p>Task</p>
+                <p id="task-active"></p>
+                <p id="task-archive"></p>
+            </li>
+            <li class="summary-item">
+                <p>Random Thought</p>
+                <p id="random-thought-active"></p>
+                <p id="random-thought-archive"></p>
+            </li>
+            <li class="summary-item">
+                <p>Idea</p>
+                <p id="idea-active"></p>
+                <p id="idea-archive"></p>
+            </li>
+        </ul>
+    <!-- Modal -->
+    <form class="modal fade" id="form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Task Name</p>
+                    <input type="text" class="form-control" name="" id="textInput" />
+                    <div id="msg"></div>
+                    <br />
+                    <p>Content</p>
+                    <textarea name="" class="form-control" id="textarea" cols="30" rows="5"></textarea>
+                    <br />
+                    <p>Category</p>
+                    <select name="category" class="form-control" id="category">
+                        <option value="Task">Task</option>
+                        <option value="Random Thought">Random Thought</option>
+                        <option value="Idea">Idea</option>
+                      </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" id="add" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
