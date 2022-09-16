@@ -1,6 +1,5 @@
 import { data } from "../index.js";
 
-//main list
 let notesList = document.querySelector(".notes-list");
 
 export function toggleNotesDisplay() {

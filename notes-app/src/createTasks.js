@@ -20,8 +20,9 @@ export const createTasks = () => {
   
         let utc = new Date().toJSON().slice(0,10);
         let reg = /(\d{1,4}([.\-/])\d{1,2}([.\-/])\d{1,4})/g;
+        let matchDate = "";
         if (x.description.match(reg)) {
-            x.date = x.description.match(reg);
+            matchDate = x.description.match(reg);
         }
   
         let newLi = document.createElement("li");
@@ -50,7 +51,7 @@ export const createTasks = () => {
     
         let spanDate = document.createElement("span");
         spanDate.setAttribute("class", "small text-secondary");
-        spanDate.innerHTML = x.date;
+        spanDate.innerHTML = matchDate;
         newLi.appendChild(spanDate);
     
         let spanOptions = document.createElement("span");

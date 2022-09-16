@@ -1,9 +1,6 @@
 import { acceptData } from "./acceptData.js";
 
-//add note button
 let addNote = document.querySelector("#add");
-
-//validation error message
 let msg = document.querySelector("#msg");
 
 export let formValidation = () => {

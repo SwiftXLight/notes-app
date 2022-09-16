@@ -1,6 +1,5 @@
 import { data } from "../index.js";
 
-//active and archive counters
 let taskActive = document.querySelector("#task-active");
 let taskArchived = document.querySelector("#task-archive");
 let ideaActive = document.querySelector("#idea-active");

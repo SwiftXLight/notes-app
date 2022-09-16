@@ -4,7 +4,6 @@ import { createTasks } from "./createTasks.js";
 export let acceptData = () => {
     let newItem = {
       text: textInput.value,
-      date: dateInput.value,
       description: textarea.value,
       category: category.value,
       isArchived: false
